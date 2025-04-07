@@ -1,23 +1,24 @@
 package main
 
 import (
-	"log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-
-	// Gin 엔진을 생성합니다.
 	r := gin.Default()
 
-	// "/" 경로로 요청이 들어오면 index.html을 반환
-	r.Static("/static","./views/static")
-	r.StaticFile("/", "./views/index.html")
+	// 정적 파일 서빙 (JS, CSS, 이미지 등)
+	r.Static("/static", "./views")
 
-	// 서버 실행
-	log.Println("서버 실행 중: http://localhost:2580")
-	if err := r.Run(":2580"); err != nil {
-		log.Fatal("서버 실행 중 에러:", err)
-	}
+	// HTML 템플릿 로드
+	r.LoadHTMLFiles("views/index.html")
+
+	// 라우터 설정
+	r.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", nil)
+	})
+
+	r.Run(":2580") // 포트번호 변경 
 }
