@@ -1,6 +1,7 @@
 package main
 
 import (
+	"go-gonic-api/handlers"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -8,17 +9,17 @@ import (
 
 func main() {
 	r := gin.Default()
-
-	// 정적 파일 서빙 (JS, CSS, 이미지 등)
-	r.Static("/static", "./views")
-
-	// HTML 템플릿 로드
 	r.LoadHTMLFiles("views/index.html")
+	// 정적 파일 서빙 (JS, CSS, 이미지 등)
+	r.Static("/static","./views/static")
 
-	// 라우터 설정
-	r.GET("/", func(c *gin.Context) {
+	//메인 화면 
+	r.GET("/" , func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
 	})
+
+	// Markdown 렌더링 API
+	r.GET("/render", handlers.RenderMarkdown)  
 
 	r.Run(":2580") // 포트번호 변경 
 }
