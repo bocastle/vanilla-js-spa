@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("main.js");
-  
 
   const btn = document.getElementById("loadBtn");
-  
+
   const input = document.getElementById("mdUrl");
   const content = document.getElementById("content");
 
@@ -19,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) throw new Error("불러오기 실패");
 
       const html = await res.text();
+      content.setAttribute("class", "markdown-body");
       content.innerHTML = html;
     } catch (err) {
       content.innerHTML = `<p style="color: red;">🚫 ${err.message}</p>`;
