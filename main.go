@@ -10,7 +10,8 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.LoadHTMLFiles("views/index.html")
+	r.LoadHTMLFiles("views/index.html", "views/posts.html")
+
 	// 정적 파일 서빙 (JS, CSS, 이미지 등)
 	r.Static("/static", "./static")
 
@@ -18,11 +19,19 @@ func main() {
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
 	})
-
-	r.GET("/render", func(c *gin.Context) {
-		url := c.Query("url")
-		if url == "" {
-			c.String(http.StatusBadRequest, "URL is required")
+	r.GET("/posts", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "posts.html", nil)
+	})
+	var mdFiles = map[string]string{
+		"go-intro":  "https://raw.githubusercontent.com/adam-p/markdown-here/master/README.md",
+		"goroutine": "https://raw.githubusercontent.com/adam-p/markdown-here/master/README.md",
+		"js-async":  "https://raw.githubusercontent.com/adam-p/markdown-here/master/README.md",
+	}
+	r.GET("/render/:id", func(c *gin.Context) {
+		id := c.Param("id")
+		url, exists := mdFiles[id]
+		if !exists {
+			c.String(http.StatusNotFound, "해당 문서를 찾을 수 없습니다.")
 			return
 		}
 
