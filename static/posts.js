@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   posts.forEach((post) => {
     const li = document.createElement("li");
     const a = document.createElement("a");
-    a.href = `/render/${post.id}`;
+    a.href = `/render?id=${post.id}`;
     a.textContent = post.title;
     li.appendChild(a);
     postList.appendChild(li);

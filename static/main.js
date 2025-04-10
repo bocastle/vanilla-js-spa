@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     content.innerHTML = "<p>⏳ 마크다운 불러오는 중...</p>";
 
     try {
-      const res = await fetch(`/render?url=${encodeURIComponent(url)}`);
+      const res = await fetch(`/render?id=goroutine`);
       if (!res.ok) throw new Error("불러오기 실패");
 
       const html = await res.text();

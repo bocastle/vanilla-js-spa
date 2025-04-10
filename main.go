@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 
@@ -24,11 +25,12 @@ func main() {
 	})
 	var mdFiles = map[string]string{
 		"go-intro":  "https://raw.githubusercontent.com/bocastle/logs/main/Go/goroutine.md",
-		"goroutine": "https://raw.githubusercontent.com/adam-p/markdown-here/master/README.md",
+		"goroutine": "https://raw.githubusercontent.com/bocastle/logs/main/README.md",
 		"js-async":  "https://raw.githubusercontent.com/adam-p/markdown-here/master/README.md",
 	}
-	r.GET("/render/:id", func(c *gin.Context) {
-		id := c.Param("id")
+	r.GET("/render", func(c *gin.Context) {
+		id := c.Query("id")
+		fmt.Println("id", id)
 		url, exists := mdFiles[id]
 		if !exists {
 			c.String(http.StatusNotFound, "해당 문서를 찾을 수 없습니다.")
