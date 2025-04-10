@@ -24,7 +24,7 @@ func main() {
 		c.HTML(http.StatusOK, "posts.html", nil)
 	})
 	var mdFiles = map[string]string{
-		"go-intro":  "https://raw.githubusercontent.com/bocastle/logs/main/Go/goroutine.md",
+		"go-intro":  "https://raw.githubusercontent.com/bocastle/logs/main/Go/goroutine(고루틴).md",
 		"goroutine": "https://raw.githubusercontent.com/bocastle/logs/main/README.md",
 		"js-async":  "https://raw.githubusercontent.com/adam-p/markdown-here/master/README.md",
 	}
