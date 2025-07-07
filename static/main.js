@@ -1,5 +1,10 @@
+import { Header } from "./header.js";
 document.addEventListener("DOMContentLoaded", () => {
   console.log("main.js");
+
+  console.log("main.js", document.body);
+
+  document.body.prepend(Header());
 
   const btn = document.getElementById("loadBtn");
 
