@@ -6,22 +6,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css"
     />
     <link rel="stylesheet" href="/views/css/header.css" />
+    <link rel="stylesheet" href="/views/css/style.css" />
     <style></style>
     <meta charset="UTF-8" />
-    <title>Markdown Blog</title>
+    <title>心臓を捧げよ</title>
   </head>
   <body>
-    <h1>📄 Markdown Renderer</h1>
-    <input
-      id="mdUrl"
-      type="text"
-      placeholder="Markdown URL 입력"
-      value="https://raw.githubusercontent.com/adam-p/markdown-here/master/README.md"
-    />
-    <button id="loadBtn">Render</button>
-    <hr />
-    <div id="content"></div>
-
-    <script type="module" src="/static/main.js"></script>
+    <div id="app"></div>
+    <script type="module" src="/views/js/main.js"></script>
   </body>
 </html>

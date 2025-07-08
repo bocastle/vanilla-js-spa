@@ -16,6 +16,8 @@ func main() {
 	// 정적 파일 서빙 (JS, CSS, 이미지 등)
 	r.Static("/static", "./static")
 	r.Static("/views/css", "./views/css")
+	r.Static("/views/js", "./views/js")
+	r.Static("/views/components", "./views/components")
 
 	//메인 화면
 	r.GET("/", func(c *gin.Context) {
