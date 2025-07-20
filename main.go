@@ -17,7 +17,7 @@ func main() {
 	r.Static("/static", "./static")
 	r.Static("/views/css", "./views/css")
 	r.Static("/views/js", "./views/js")
-	r.Static("/views/components", "./views/components")
+	r.Static("/views/pages", "./views/pages")
 
 	//메인 화면
 	r.GET("/", func(c *gin.Context) {
