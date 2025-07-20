@@ -26,3 +26,4 @@ go.work.sum
 .qodo
 go-gonic-api
 node_modules/
+vanilla-js-spa
