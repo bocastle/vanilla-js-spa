@@ -11,7 +11,7 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.LoadHTMLFiles("views/index.html", "views/posts.html")
+	r.LoadHTMLFiles("views/index.html")
 
 	// 정적 파일 서빙 (JS, CSS, 이미지 등)
 	r.Static("/static", "./static")
@@ -22,9 +22,6 @@ func main() {
 	//메인 화면
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
-	})
-	r.GET("/posts", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "posts.html", nil)
 	})
 	var mdFiles = map[string]string{
 		"go-intro":  "https://raw.githubusercontent.com/bocastle/logs/main/Go/goroutine(고루틴).md",
