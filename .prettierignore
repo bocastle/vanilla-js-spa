@@ -1,0 +1,19 @@
+# Go files
+*.go
+go.mod
+go.sum
+
+# Build files
+*.exe
+go-gonic-api.exe
+
+# Dependencies
+node_modules/
+
+# Test files (if needed)
+# tests/
+
+# Other
+.git/
+.vscode/
+
