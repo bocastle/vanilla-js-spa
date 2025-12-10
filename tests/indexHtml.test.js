@@ -8,7 +8,7 @@ describe("index.html", () => {
 
   beforeAll(() => {
     const html = fs.readFileSync(
-      path.resolve(__dirname, "../views/index.html"),
+      path.resolve(__dirname, "../public/index.html"),
       "utf8"
     );
     dom = new JSDOM(html);

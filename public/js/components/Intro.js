@@ -10,3 +10,4 @@ export default function Intro(onStart) {
   }, 2000);
   return intro;
 }
+

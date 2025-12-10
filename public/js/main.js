@@ -55,3 +55,4 @@ if (!localStorage.getItem('visited')) {
 } else {
   renderLayout();
 }
+

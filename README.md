@@ -9,16 +9,27 @@
 ## 📁 프로젝트 구조
 
 ```
-views/
+public/
   ├─ index.html
+  ├─ pages/
+  │   ├─ home.html
+  │   ├─ about.html
+  │   ├─ posts.html
+  │   └─ contact.html
   ├─ js/
-  │    └─ main.js
-  ├─ components/
-  │    ├─ Header.js
-  │    ├─ Sidebar.js
-  │    └─ Footer.js
+  │   ├─ main.js
+  │   ├─ components/
+  │   │   ├─ Header.js
+  │   │   ├─ Sidebar.js
+  │   │   ├─ Footer.js
+  │   │   └─ Intro.js
+  │   ├─ home/
+  │   ├─ about/
+  │   ├─ posts/
+  │   └─ contact/
   └─ css/
-       └─ style.css
+      ├─ style.css
+      └─ header.css
 ```
 
 ---

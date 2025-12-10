@@ -11,13 +11,12 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.LoadHTMLFiles("views/index.html")
+	r.LoadHTMLFiles("public/index.html")
 
 	// 정적 파일 서빙 (JS, CSS, 이미지 등)
-	r.Static("/static", "./static")
-	r.Static("/views/css", "./views/css")
-	r.Static("/views/js", "./views/js")
-	r.Static("/views/pages", "./views/pages")
+	r.Static("/css", "./public/css")
+	r.Static("/js", "./public/js")
+	r.Static("/pages", "./public/pages")
 
 	//메인 화면
 	r.GET("/", func(c *gin.Context) {

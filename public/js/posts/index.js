@@ -1,5 +1,5 @@
 export default async function Posts() {
-  const res = await fetch('/views/pages/posts.html');
+  const res = await fetch('/pages/posts.html');
   const html = await res.text();
   const template = document.createElement('div');
   template.innerHTML = html;
@@ -21,3 +21,4 @@ export default async function Posts() {
   }
   return template;
 }
+
