@@ -1,0 +1,2 @@
+web: ./vanilla-js-spa
+
