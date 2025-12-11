@@ -1,6 +1,6 @@
 [build]
-  command = "npm install && npm run build && go build -o vanilla-js-spa ."
+  command = "go build -o vanilla-js-spa ."
 
 [deploy]
-  command = "npm install && npm run build && go build -o vanilla-js-spa . && ./vanilla-js-spa"
+  command = "./vanilla-js-spa"
 

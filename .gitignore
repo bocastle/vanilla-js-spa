@@ -27,4 +27,3 @@ go.work.sum
 go-gonic-api
 node_modules/
 vanilla-js-spa
-dist/
