@@ -1,0 +1,14 @@
+{
+  "name": "vanilla-js-spa",
+  "version": "1.0.0",
+  "description": "Vanilla JS SPA with Webpack",
+  "scripts": {
+    "build": "webpack --mode production && node scripts/copy-html.js",
+    "dev": "webpack --mode development --watch"
+  },
+  "devDependencies": {
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
+

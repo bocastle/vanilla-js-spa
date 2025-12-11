@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gomarkdown/markdown"
@@ -11,12 +13,24 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.LoadHTMLFiles("public/index.html")
+
+	// dist 폴더가 있으면 프로덕션 빌드, 없으면 개발 모드
+	var staticDir string
+	var htmlFile string
+	if _, err := os.Stat("dist"); err == nil {
+		staticDir = "dist"
+		htmlFile = "dist/index.html"
+	} else {
+		staticDir = "public"
+		htmlFile = "public/index.html"
+	}
+
+	r.LoadHTMLFiles(htmlFile)
 
 	// 정적 파일 서빙 (JS, CSS, 이미지 등)
-	r.Static("/css", "./public/css")
-	r.Static("/js", "./public/js")
-	r.Static("/pages", "./public/pages")
+	r.Static("/css", filepath.Join(staticDir, "css"))
+	r.Static("/js", filepath.Join(staticDir, "js"))
+	r.Static("/pages", filepath.Join(staticDir, "pages"))
 
 	//메인 화면
 	r.GET("/", func(c *gin.Context) {
