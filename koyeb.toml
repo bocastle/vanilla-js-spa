@@ -2,5 +2,5 @@
   command = "go build -o vanilla-js-spa ."
 
 [deploy]
-  command = "./vanilla-js-spa"
+  command = "go build -o vanilla-js-spa . && ./vanilla-js-spa"
 
