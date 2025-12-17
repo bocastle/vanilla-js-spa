@@ -7,6 +7,16 @@ import Contact from './contact/index.js';
 import Home from './home/index.js';
 import Posts from './posts/index.js';
 
+// 스타일된 콘솔 로그 (console.info는 production에서도 유지됨)
+console.info(
+  '%c🚀 心臓を捧げよ!',
+  'color: #ff6b6b; font-size: 24px; font-weight: bold; text-shadow: 2px 2px 4px #000;'
+);
+console.info(
+  '%c Vanilla JS SPA ',
+  'background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); color: white; padding: 8px 16px; border-radius: 4px; font-size: 14px;'
+);
+
 const app = document.getElementById('app');
 
 async function renderPage() {
