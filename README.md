@@ -120,3 +120,63 @@ public/
    ```
 
 2. `dist` 폴더가 Git에 포함되어 배포 환경에서 사용됩니다.
+
+---
+
+## 📧 스케줄링 및 메일 전송
+
+서버는 매일 한국시간 오후 1시에 자동으로 메일을 전송합니다.
+
+### 환경 변수 설정
+
+메일 전송을 위해 다음 환경 변수를 설정해야 합니다:
+
+#### 1. 로컬 개발 환경
+
+프로젝트 루트에 `.env` 파일을 생성하고 다음 내용을 추가하세요:
+
+```bash
+# SMTP 서버 설정
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASSWORD=your-app-password
+SMTP_FROM=your-email@gmail.com
+
+# 수신자 설정
+EMAIL_TO=recipient@example.com
+
+# 서버 포트 (선택사항, 기본값: 2580)
+PORT=2580
+```
+
+**주의**: `.env` 파일은 `.gitignore`에 포함되어 있어 Git에 커밋되지 않습니다.
+
+#### 2. Koyeb 배포 환경
+
+Koyeb 대시보드에서 환경 변수를 설정하세요:
+
+1. Koyeb 대시보드 접속
+2. 해당 서비스 선택
+3. **Settings** > **Environment Variables** 메뉴로 이동
+4. 다음 환경 변수들을 추가:
+   - `SMTP_HOST`
+   - `SMTP_PORT`
+   - `SMTP_USER`
+   - `SMTP_PASSWORD`
+   - `SMTP_FROM`
+   - `EMAIL_TO`
+   - `PORT` (Koyeb가 자동으로 설정하지만 필요시 수정 가능)
+
+### Gmail 사용 시 주의사항
+
+Gmail을 사용하는 경우:
+1. 2단계 인증을 활성화해야 합니다
+2. 앱 비밀번호를 생성하여 `SMTP_PASSWORD`에 사용합니다
+3. 앱 비밀번호 생성: Google 계정 > 보안 > 2단계 인증 > 앱 비밀번호
+
+### 스케줄 설정
+
+현재 설정: 매일 오후 1시 (한국시간, Asia/Seoul)
+- Cron 표현식: `0 13 * * *`
+- 스케줄 변경은 `main.go`의 cron 표현식을 수정하면 됩니다
