@@ -34,6 +34,43 @@ func main() {
 	} else {
 		log.Printf("[MAIN] Email scheduler started (every 30 minutes KST)")
 	}
+
+	// Keep-alive: 5분마다 실행하여 인스턴스가 슬립 모드로 전환되지 않도록 함
+	_, err = c.AddFunc("*/5 * * * *", func() {
+		log.Printf("[MAIN] Keep-alive ping at %s", time.Now().Format("2006-01-02 15:04:05"))
+	})
+	if err != nil {
+		log.Printf("[MAIN] ERROR: Failed to add keep-alive job: %v", err)
+	} else {
+		log.Printf("[MAIN] Keep-alive scheduler started (every 5 minutes KST)")
+	}
+
+	// 헬스체크: 25분 간격으로 실행 (테스트용)
+	_, err = c.AddFunc("0,25,50 * * * *", func() {
+		timestamp := time.Now().Format("2006-01-02 15:04:05")
+		log.Printf("[HEALTHCHECK] 25분 간격으로 헬스체크 실행 - %s", timestamp)
+		
+		// 실제 헬스체크 엔드포인트 호출 (자체 호출)
+		port := os.Getenv("PORT")
+		if port == "" {
+			port = "2580"
+		}
+		healthURL := fmt.Sprintf("http://localhost:%s/health", port)
+		
+		resp, err := http.Get(healthURL)
+		if err != nil {
+			log.Printf("[HEALTHCHECK] ERROR: Failed to call health endpoint: %v", err)
+		} else {
+			defer resp.Body.Close()
+			log.Printf("[HEALTHCHECK] SUCCESS: Health check completed - Status: %d", resp.StatusCode)
+		}
+	})
+	if err != nil {
+		log.Printf("[MAIN] ERROR: Failed to add healthcheck job: %v", err)
+	} else {
+		log.Printf("[MAIN] Healthcheck scheduler started (every 25 minutes KST)")
+	}
+
 	c.Start()
 	defer c.Stop()
 
