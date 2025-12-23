@@ -56,7 +56,7 @@ func SendEmail(to, subject, body string) error {
 func SendDailyEmail() {
 	timestamp := time.Now().Format("2006-01-02 15:04:05")
 	log.Printf("[SCHEDULER] Daily email job started at %s", timestamp)
-	
+
 	// 환경 변수에서 수신자 이메일 가져오기
 	to := os.Getenv("EMAIL_TO")
 	if to == "" {
@@ -82,4 +82,3 @@ func SendDailyEmail() {
 		log.Printf("[SCHEDULER] SUCCESS: Daily email sent successfully to %s at %s", to, timestamp)
 	}
 }
-
