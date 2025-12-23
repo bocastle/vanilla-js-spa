@@ -2,8 +2,10 @@ package scheduler
 
 import (
 	"fmt"
+	"log"
 	"net/smtp"
 	"os"
+	"time"
 )
 
 // SendEmail sends an email using SMTP
@@ -39,20 +41,26 @@ func SendEmail(to, subject, body string) error {
 
 	// 메일 전송
 	addr := fmt.Sprintf("%s:%s", smtpHost, smtpPort)
+	log.Printf("[EMAIL] Attempting to send email to %s via %s", to, addr)
 	err := smtp.SendMail(addr, auth, from, []string{to}, msg)
 	if err != nil {
+		log.Printf("[EMAIL] ERROR: Failed to send email: %v", err)
 		return fmt.Errorf("failed to send email: %v", err)
 	}
+	log.Printf("[EMAIL] Email sent successfully to %s", to)
 
 	return nil
 }
 
 // SendDailyEmail sends daily email at 1 PM KST
 func SendDailyEmail() {
+	timestamp := time.Now().Format("2006-01-02 15:04:05")
+	log.Printf("[SCHEDULER] Daily email job started at %s", timestamp)
+	
 	// 환경 변수에서 수신자 이메일 가져오기
 	to := os.Getenv("EMAIL_TO")
 	if to == "" {
-		fmt.Println("EMAIL_TO environment variable is not set")
+		log.Printf("[SCHEDULER] ERROR: EMAIL_TO environment variable is not set")
 		return
 	}
 
@@ -69,9 +77,9 @@ func SendDailyEmail() {
 
 	err := SendEmail(to, subject, body)
 	if err != nil {
-		fmt.Printf("Error sending daily email: %v\n", err)
+		log.Printf("[SCHEDULER] ERROR: Failed to send daily email to %s: %v", to, err)
 	} else {
-		fmt.Printf("Daily email sent successfully to %s\n", to)
+		log.Printf("[SCHEDULER] SUCCESS: Daily email sent successfully to %s at %s", to, timestamp)
 	}
 }
 

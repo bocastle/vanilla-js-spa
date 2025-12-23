@@ -23,16 +23,16 @@ func main() {
 		log.Println("No .env file found, using system environment variables")
 	}
 
-	// 스케줄러 설정 (한국시간 오후 1시)
+	// 스케줄러 설정 (한국시간)
 	loc, _ := time.LoadLocation("Asia/Seoul")
 	c := cron.New(cron.WithLocation(loc))
 
-	// 매일 오후 1시에 메일 전송 (한국시간)
-	_, err := c.AddFunc("0 13 * * *", scheduler.SendDailyEmail)
+	// 30분 간격으로 메일 전송 (한국시간)
+	_, err := c.AddFunc("*/30 * * * *", scheduler.SendDailyEmail)
 	if err != nil {
-		fmt.Printf("Failed to add cron job: %v\n", err)
+		log.Printf("[MAIN] ERROR: Failed to add cron job: %v", err)
 	} else {
-		fmt.Println("Daily email scheduler started (1 PM KST)")
+		log.Printf("[MAIN] Email scheduler started (every 30 minutes KST)")
 	}
 	c.Start()
 	defer c.Stop()
