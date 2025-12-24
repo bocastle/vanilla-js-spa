@@ -36,8 +36,23 @@ func main() {
 	}
 
 	// Keep-alive: 5분마다 실행하여 인스턴스가 슬립 모드로 전환되지 않도록 함
+	// 외부 URL로 호출하여 Koyeb이 트래픽으로 인식하도록 함
 	_, err = c.AddFunc("*/5 * * * *", func() {
-		log.Printf("[MAIN] Keep-alive ping at %s", time.Now().Format("2006-01-02 15:04:05"))
+		timestamp := time.Now().Format("2006-01-02 15:04:05")
+		log.Printf("[MAIN] Keep-alive ping at %s", timestamp)
+
+		// 환경 변수에서 앱 URL 가져오기
+		appURL := os.Getenv("APP_URL")
+		if appURL != "" {
+			healthURL := fmt.Sprintf("%s/health", appURL)
+			resp, err := http.Get(healthURL)
+			if err != nil {
+				log.Printf("[MAIN] Keep-alive: Failed to call health endpoint: %v", err)
+			} else {
+				defer resp.Body.Close()
+				log.Printf("[MAIN] Keep-alive: Health check completed - Status: %d", resp.StatusCode)
+			}
+		}
 	})
 	if err != nil {
 		log.Printf("[MAIN] ERROR: Failed to add keep-alive job: %v", err)
@@ -46,17 +61,26 @@ func main() {
 	}
 
 	// 헬스체크: 25분 간격으로 실행 (테스트용)
+	// 외부 URL로 호출하여 Koyeb이 트래픽으로 인식하도록 함
 	_, err = c.AddFunc("0,25,50 * * * *", func() {
 		timestamp := time.Now().Format("2006-01-02 15:04:05")
 		log.Printf("[HEALTHCHECK] 25분 간격으로 헬스체크 실행 - %s", timestamp)
-		
-		// 실제 헬스체크 엔드포인트 호출 (자체 호출)
-		port := os.Getenv("PORT")
-		if port == "" {
-			port = "2580"
+
+		// 환경 변수에서 앱 URL 가져오기 (없으면 localhost 사용)
+		appURL := os.Getenv("APP_URL")
+		if appURL == "" {
+			// localhost는 Koyeb이 트래픽으로 인식하지 않지만, 로그는 남김
+			port := os.Getenv("PORT")
+			if port == "" {
+				port = "2580"
+			}
+			appURL = fmt.Sprintf("http://localhost:%s", port)
+			log.Printf("[HEALTHCHECK] WARNING: APP_URL not set, using localhost (will not prevent sleep)")
 		}
-		healthURL := fmt.Sprintf("http://localhost:%s/health", port)
-		
+
+		healthURL := fmt.Sprintf("%s/health", appURL)
+		log.Printf("[HEALTHCHECK] Calling health endpoint: %s", healthURL)
+
 		resp, err := http.Get(healthURL)
 		if err != nil {
 			log.Printf("[HEALTHCHECK] ERROR: Failed to call health endpoint: %v", err)
