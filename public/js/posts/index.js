@@ -36,7 +36,6 @@ function renderRepoTable(items) {
       <th>이름</th>
       <th>유형</th>
       <th>경로</th>
-      <th>링크</th>
     </tr>
   `;
   table.appendChild(thead);
@@ -44,19 +43,15 @@ function renderRepoTable(items) {
   const tbody = document.createElement('tbody');
   if (!Array.isArray(items) || items.length === 0) {
     const row = document.createElement('tr');
-    row.innerHTML = '<td colspan="4">표시할 항목이 없습니다.</td>';
+    row.innerHTML = '<td colspan="3">표시할 항목이 없습니다.</td>';
     tbody.appendChild(row);
   } else {
     items.forEach((item) => {
       const row = document.createElement('tr');
-      const link = item.html_url
-        ? `<a href="${item.html_url}" target="_blank" rel="noreferrer">열기</a>`
-        : '-';
       row.innerHTML = `
         <td>${item.name || '-'}</td>
         <td>${item.type || '-'}</td>
         <td>${item.path || '-'}</td>
-        <td>${link}</td>
       `;
       tbody.appendChild(row);
     });
