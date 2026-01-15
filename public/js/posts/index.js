@@ -16,8 +16,9 @@ export default async function Posts() {
       throw new Error(`GitHub API 오류: ${repoRes.status}`);
     }
     const items = await repoRes.json();
+    const filteredItems = filterPostItems(items);
     postsRoot.textContent = '';
-    postsRoot.appendChild(renderPostCards(items));
+    postsRoot.appendChild(renderPostCards(filteredItems));
   } catch (error) {
     postsRoot.textContent = '데이터를 불러오지 못했습니다.';
     console.error(error);
@@ -68,6 +69,19 @@ function renderPostCards(items) {
   });
 
   return list;
+}
+
+function filterPostItems(items) {
+  const excludedNames = new Set([
+    '.github',
+    '.gitignore',
+    '.obsidian',
+    'README.md',
+  ]);
+  if (!Array.isArray(items)) {
+    return [];
+  }
+  return items.filter((item) => !excludedNames.has(item.name));
 }
 
 function formatType(type) {
