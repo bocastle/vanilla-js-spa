@@ -103,6 +103,82 @@ main#main-content {
   padding: 2rem;
   background: #fff;
 }
+.posts {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.posts-header h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+}
+.posts-header p {
+  margin: 0 0 1.5rem 0;
+  color: #666;
+}
+.posts-list {
+  display: block;
+}
+.post-card-list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.post-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1rem;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.post-title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #111827;
+}
+.post-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+.post-meta-item {
+  display: inline-flex;
+  align-items: center;
+}
+.post-actions {
+  margin-top: auto;
+}
+.post-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: #111827;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+.post-link:hover {
+  background: #0f172a;
+}
+.post-link.is-disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+.post-empty {
+  padding: 2rem;
+  text-align: center;
+  color: #6b7280;
+  border: 1px dashed #d1d5db;
+  border-radius: 12px;
+  background: #f9fafb;
+}
 .footer {
   background: #222;
   color: #fff;
