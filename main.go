@@ -40,6 +40,10 @@ func main() {
 
 	r := gin.Default()
 
+	if err := r.SetTrustedProxies(nil); err != nil {
+		log.Fatalf("failed to set trusted proxies: %v", err)
+	}
+
 	// dist 폴더가 있으면 프로덕션 빌드, 없으면 개발 모드
 	var staticDir string
 	var htmlFile string
@@ -63,18 +67,21 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"status": "ok"})
 	})
 
-	//메인 화면
+	// 메인 화면
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
 	})
+
 	var mdFiles = map[string]string{
 		"go-intro":  "https://raw.githubusercontent.com/bocastle/logs/main/Go/goroutine(고루틴).md",
 		"goroutine": "https://raw.githubusercontent.com/bocastle/logs/main/README.md",
 		"js-async":  "https://raw.githubusercontent.com/adam-p/markdown-here/master/README.md",
 	}
+
 	r.GET("/render", func(c *gin.Context) {
 		id := c.Query("id")
 		fmt.Println("id", id)
+
 		url, exists := mdFiles[id]
 		if !exists {
 			c.String(http.StatusNotFound, "해당 문서를 찾을 수 없습니다.")
@@ -82,7 +89,7 @@ func main() {
 		}
 
 		resp, err := http.Get(url)
-		if err != nil || resp.StatusCode != 200 {
+		if err != nil || resp.StatusCode != http.StatusOK {
 			c.String(http.StatusBadRequest, "Failed to fetch markdown")
 			return
 		}
@@ -98,13 +105,27 @@ func main() {
 		c.Data(http.StatusOK, "text/html; charset=utf-8", html)
 	})
 
-	// 포트 설정: 환경 변수가 있으면 사용, 없으면 기본값 2580
-	// Koyeb 배포를 위해 명시적으로 0.0.0.0에 바인딩
+	// 호스트/포트 설정
+	host := os.Getenv("HOST")
+	if host == "" {
+		host = "127.0.0.1"
+	}
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "2580"
 	}
-	if err := r.Run("0.0.0.0:" + port); err != nil {
+
+	addr := host + ":" + port
+
+	displayHost := host
+	if host == "127.0.0.1" || host == "0.0.0.0" {
+		displayHost = "localhost"
+	}
+
+	log.Printf("[MAIN] Open in browser: http://%s:%s", displayHost, port)
+
+	if err := r.Run(addr); err != nil {
 		fmt.Printf("Failed to start server: %v\n", err)
 		os.Exit(1)
 	}
