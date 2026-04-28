@@ -4,7 +4,7 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
   },
-  "prettier.configPath": ".prettierrc.json",
+  "prettier.configPath": ".prettierrc",
   "prettier.ignorePath": ".prettierignore",
   "go.toolsManagement.autoUpdate": true,
   "go.useLanguageServer": true,
