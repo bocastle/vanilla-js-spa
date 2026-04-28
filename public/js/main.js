@@ -24,18 +24,20 @@ async function renderPage() {
   if (!main) return;
   main.innerHTML = '';
   let page;
-  switch (location.hash) {
-    case '#/about':
-      page = await About();
-      break;
-    case '#/posts':
-      page = await Posts();
-      break;
-    case '#/contact':
-      page = await Contact();
-      break;
-    default:
-      page = await Home();
+  const h = location.hash || '#/';
+  if (h.startsWith('#/posts')) {
+    page = await Posts();
+  } else {
+    switch (h) {
+      case '#/about':
+        page = await About();
+        break;
+      case '#/contact':
+        page = await Contact();
+        break;
+      default:
+        page = await Home();
+    }
   }
   main.appendChild(page);
 }

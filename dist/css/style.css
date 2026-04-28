@@ -115,8 +115,46 @@ main#main-content {
   margin: 0 0 1.5rem 0;
   color: #666;
 }
-.posts-list {
+.posts-content {
   display: block;
+}
+.posts-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+.posts-back {
+  color: #1d4ed8;
+  text-decoration: none;
+  font-weight: 600;
+}
+.posts-back:hover {
+  text-decoration: underline;
+}
+.posts-nav-breadcrumb,
+.posts-nav .posts-nav-sep {
+  color: #4b5563;
+  max-width: 100%;
+  word-break: break-all;
+  font-size: 0.85rem;
+}
+.post-file-view {
+  max-width: 100%;
+}
+.post-article {
+  max-width: 100%;
+  padding: 0.5rem 0 1.5rem;
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.post-md-fallback {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 .post-card-list {
   display: grid;
